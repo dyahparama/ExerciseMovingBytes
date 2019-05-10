@@ -1,12 +1,16 @@
  	
 <head></head>
 <body onload="WriteFile()">
-		<label>Order : </label><input id="order" name="order" type="text">
-		<input type="text" id="dataMakan" value="5">
-		<input type="text" id="antriMakan" value="1">
-		<input type="text" id="dataMinum" value="3">
-		<input type="text" id="antriMinum" value="2">
-		<input type="button" id="pesan" name="pesan" Value="Pesan" onclick="pencet()" download="pesan.txt">
+	<center>
+		<table>
+			<tr><td><label>Order : </label></td><td><input id="order" name="order" type="text"></td></tr>
+			<tr><td></td><td><input type="button" id="pesan" name="pesan" value="Pesan" onclick="pencet()"></td></tr>
+		</table>
+	</center>
+		<input type="hidden" id="dataMakan" value="0">
+		<input type="hidden" id="antriMakan" value="0">
+		<input type="hidden" id="dataMinum" value="0">
+		<input type="hidden" id="antriMinum" value="0">
 	</br>
 	<div id="hasil"></div>
 
@@ -134,9 +138,8 @@
 			}
 			else if(inputan.substring(0,5)=="clear"){
 				var cleare=inputan.replace(/\s/g,''); //menghilangkan spasi
-				alert(inputan.substring(5,12));
-				if(inputan.substring(5,12)=="Makanan"){
-					if(document.getElementById('dataMakan').value != 0){
+				if(inputan.substring(5,12)=="Makanan"){ // jika mau clear makanan
+					if(document.getElementById('dataMakan').value != 0){ //  jika masih ada makanan yang dikerjakan
 						var tampa = parseInt(document.getElementById('dataMakan').value) - parseInt(cleare.substring(18,19));
 						if(tampa<0){
 							document.getElementById('dataMakan').value = Math.abs(tampa);
@@ -144,7 +147,17 @@
 
 						}
 						else if(tampa==0){
-							document.getElementById('dataMakan').value = 0;
+							if(parseInt(document.getElementById('antriMakan').value) > 3){
+								document.getElementById('dataMakan').value = 3;
+								document.getElementById('antriMakan').value = parseInt(document.getElementById('antriMakan').value) - 3;
+							}
+							else if(parseInt(document.getElementById('antriMakan').value) <= 3 && parseInt(document.getElementById('antriMakan').value) > 0 ){
+								document.getElementById('dataMakan').value = parseInt(document.getElementById('antriMakan').value);
+								document.getElementById('antriMakan').value = 0;
+							}
+							else{
+								document.getElementById('dataMakan').value = 0;
+							}
 						}
 						else{
 							document.getElementById('dataMakan').value = tampa;
@@ -157,7 +170,7 @@
 					}
 				}
 				else{
-					if(document.getElementById('dataMinum').value != 0){
+					if(document.getElementById('dataMinum').value != 0){ //  jika masi ada minum yang dikerjakan
 						var tampa = parseInt(document.getElementById('dataMinum').value) - parseInt(cleare.substring(18,19));
 						if(tampa<0){
 							document.getElementById('dataMinum').value = Math.abs(tampa);
@@ -165,10 +178,17 @@
 							document.getElementById('antriMinum').value = tambah;
 						}
 						else if(tampa==0){
-							if(parseInt(document.getElementById('antriMinum').value) != 0){
-
+							if(parseInt(document.getElementById('antriMinum').value) > 3){
+								document.getElementById('dataMinum').value = 3;
+								document.getElementById('antriMinum').value = parseInt(document.getElementById('antriMinum').value) - 3;
 							}
-							document.getElementById('dataMinum').value = 0;
+							else if(parseInt(document.getElementById('antriMinum').value) <= 3 && parseInt(document.getElementById('antriMinum').value) > 0 ){
+								document.getElementById('dataMinum').value = parseInt(document.getElementById('antriMinum').value);
+								document.getElementById('antriMinum').value = 0;
+							}
+							else{
+								document.getElementById('dataMinum').value = 0;
+							}
 						}
 						else{
 							document.getElementById('dataMinum').value = tampa;
